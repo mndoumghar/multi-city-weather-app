@@ -8,14 +8,14 @@ so that I know what happened and can retry.
 
 ## Acceptance Criteria
 
-- [ ] Display a loading indicator.
-- [ ] Handle unknown cities.
-- [ ] Handle network errors.
-- [ ] Handle HTTP errors.
-- [ ] Handle API quota limitations.
-- [ ] Display readable error messages.
-- [ ] Hide loading indicators after success or failure.
-- [ ] Allow the user to retry.
+- [X] Display a loading indicator.
+- [X]Handle unknown cities.
+- [X] Handle network errors.
+- [X] Handle HTTP errors.
+- [X] Handle API quota limitations.
+- [X] Display readable error messages.
+- [X] Hide loading indicators after success or failure.
+- [X] Allow the user to retry.
 
 
 
