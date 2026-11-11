@@ -51,8 +51,8 @@ so that I can plan my activities.
 
 ## Acceptance Criteria
 
-- [ ] Retrieve daily forecast data.
-- [ ] Display several forecast days (target: 7).
+- [X] Retrieve daily forecast data.
+- [] Display several forecast days (target: 7).
 - [ ] Display readable dates.
 - [ ] Display minimum temperature.
 - [ ] Display maximum temperature.

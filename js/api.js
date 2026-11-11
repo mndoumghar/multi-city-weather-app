@@ -11,6 +11,18 @@ const CURRENT_FIELDS = [
 ];
 
 
+const DAILY_FIELDS = [
+  "weather_code",
+  "temperature_2m_max",
+  "temperature_2m_min",
+  "precipitation_probability_max",
+  "sunrise",
+  "sunset",
+];
+
+
+
+
 export async function searchCities(name) {
   const params = new URLSearchParams({
     name,
@@ -34,7 +46,8 @@ export async function getWeather(latitude, longitude) {
     latitude,
     longitude,
     current: CURRENT_FIELDS.join(","),
-    daily: "sunrise,sunset",
+    daily:  DAILY_FIELDS.join(","),
+    forecast_days: 7,
     timezone: "auto",
     temperature_unit: "celsius",
     wind_speed_unit: "kmh",
