@@ -12,7 +12,6 @@ function init() {
   ui.searchForm.addEventListener("submit", handleSearchSubmit);
 }
 
-
 async function handleSearchSubmit(event) {
   event.preventDefault();
 
@@ -43,6 +42,9 @@ async function selectCity(place) {
 
   await runTask("Loading weather...", async () => {
     const weather = await getWeather(place.latitude, place.longitude);
+
+     hide(ui.resultsSection);
+
 
     renderCurrentWeather(ui.currentCard, place, weather);
 

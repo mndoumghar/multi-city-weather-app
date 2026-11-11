@@ -96,6 +96,7 @@ export function renderLayout(root) {
   statusMessage,
   errorMessage,
   resultsList,
+  resultsSection,
   currentCard,
   forecastList,
   forecastSection,
