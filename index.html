@@ -1,36 +1,124 @@
-<!DOCTYPE html><html lang="en">
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Search for a city and check its current weather conditions.">
+    <meta name="theme-color" content="#1f4fb8">
+
+    <title>Weather Dashboard</title>
+
     <link rel="stylesheet" href="css/style.css">
-    <title>weather</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.4/dist/tailwind.min.css" rel="stylesheet">
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.4/dist/tailwind.min.css"
+        rel="stylesheet"
+    >
+
+    <script src="./js/main.js" defer></script>
 </head>
-<body class="">
 
-    <div id="app" class= "mt-20"></div>
+<body>
 
-    <form id="search-form" class="flex gap-2">
-        <input
-        type="search"
-        id="city"
-        placeholder="Enter city name..."
-        class="border rounded p-2"
+    <header class="app-header">
+        <h1 class="brand">⛅ Weather Dashboard</h1>
+        <form id="search-form" class="search" role="search" autocomplete="off">
+
+            <label class="visually-hidden" for="city">
+                Search for a city
+            </label>
+
+            <input
+                type="search"
+                id="city"
+                placeholder="Enter city name..."
+                autocomplete="off"
+                required
+            >
+           
+            <button  id="search-input" type="submit">
+                Search
+            </button>
+            
+
+        </form>
+
+    </header>
+
+    <main id="main" class="dashboard" aria-busy="false">
+        <p id="loading" class="message" role="status" aria-live="polite" hidden>
+            Searching...
+        </p>
+
+        <p id="error" class="message is-error" role="alert" hidden></p>
+
+        <section class="card" aria-label="City search results">
+
+            <h2>Search results</h2>
+
+            <div
+                id="results"
+                class="flex flex-col gap-2"
+                aria-live="polite"
+            >
+            </div>
+
+        </section>
+
+        <section
+            id="current"
+            class="card current"
+            aria-labelledby="current-heading"
+            hidden
         >
-        
-        <button
-        type="submit"
-        class="bg-green-700 text-white px-4 py-2 rounded cursor-pointer"
-        >
-        Search
-    </button>
-</form>
 
-<p id="loading" class="hidden">Searching...</p>
-<p id="error" class="text-red-500 hidden"></p>
-<div id="results" class="mt-4 px-5 flex flex-col gap-2">
-   
-</div>
-<script src="./js/main.js"></script>
+            <h2 id="current-heading" class="place"></h2>
+
+            <div class="current-main">
+
+                <span class="current-icon" aria-hidden="true"></span>
+
+                <p class="current-temp"></p>
+
+            </div>
+
+            <p class="current-label"></p>
+
+            <dl class="current-details">
+
+                <div>
+                    <dt>Feels like</dt>
+                    <dd data-field="feels"></dd>
+                </div>
+
+                <div>
+                    <dt>Humidity</dt>
+                    <dd data-field="humidity"></dd>
+                </div>
+
+                <div>
+                    <dt>Wind</dt>
+                    <dd data-field="wind"></dd>
+                </div>
+
+                <div>
+                    <dt>Sunrise</dt>
+                    <dd data-field="sunrise"></dd>
+                </div>
+
+                <div>
+                    <dt>Sunset</dt>
+                    <dd data-field="sunset"></dd>
+                </div>
+
+            </dl>
+
+        </section>
+
+    </main>
+
+
 </body>
 </html>

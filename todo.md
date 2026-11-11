@@ -30,14 +30,14 @@ so that I can understand its current conditions.
 
 ## Acceptance Criteria
 
-- [ ] Display the city name and country.
-- [ ] Display temperature.
-- [ ] Display weather description.
-- [ ] Display humidity.
-- [ ] Display wind speed.
-- [ ] Display a weather icon.
-- [ ] Display appropriate units.
-- [ ] Use real API data.
+- [X] Display the city name and country.
+- [X] Display temperature.
+- [X] Display weather description.
+- [X] Display humidity.
+- [X] Display wind speed.
+- [X] Display a weather icon.
+- [X] Display appropriate units.
+- [X] Use real API data.
 
 
 
