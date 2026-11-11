@@ -52,12 +52,12 @@ so that I can plan my activities.
 ## Acceptance Criteria
 
 - [X] Retrieve daily forecast data.
-- [] Display several forecast days (target: 7).
-- [ ] Display readable dates.
-- [ ] Display minimum temperature.
-- [ ] Display maximum temperature.
-- [ ] Display weather descriptions and icons.
-- [ ] Handle missing forecast data.
+- [X] Display several forecast days (target: 7).
+- [X] Display readable dates.
+- [X] Display minimum temperature.
+- [X] Display maximum temperature.
+- [X] Display weather descriptions and icons.
+- [X] Handle missing forecast data.
 
 
 ### US-04: Handle API errors and loading states
