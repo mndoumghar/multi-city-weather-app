@@ -1,6 +1,6 @@
 import { show, hide } from "./dom.js";
 import { searchCities, getWeather } from "./api.js";
-import { renderLayout, renderResults, renderCurrentWeather } from "./render.js";
+import { renderLayout, renderResults, renderCurrentWeather , renderDailyForecast} from "./render.js";
 
 
 const root = document.getElementById("app");
@@ -24,7 +24,7 @@ async function handleSearchSubmit(event) {
     return;
   }
 
-  
+
   await runTask("Searching...", async () => {
     const places = await searchCities(city);
 
@@ -39,13 +39,21 @@ async function handleSearchSubmit(event) {
 
 async function selectCity(place) {
   hide(ui.currentCard);
+  hide(ui.forecastSection);
 
   await runTask("Loading weather...", async () => {
     const weather = await getWeather(place.latitude, place.longitude);
+
     renderCurrentWeather(ui.currentCard, place, weather);
+
+    renderDailyForecast(ui.forecastList, weather);
+
     show(ui.currentCard);
+    show(ui.forecastSection);
+
   }, "Unable to load weather. Please try again.");
 }
+
 
 
 async function runTask(loadingText, task, errorText) {
@@ -73,5 +81,6 @@ function showError(text) {
 function resetMessages() {
   hide(ui.errorMessage);
   hide(ui.currentCard);
+  hide(ui.forecastSection);
   ui.resultsList.replaceChildren();
 }

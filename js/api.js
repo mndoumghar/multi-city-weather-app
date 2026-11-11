@@ -47,7 +47,7 @@ export async function getWeather(latitude, longitude) {
     longitude,
     current: CURRENT_FIELDS.join(","),
     daily:  DAILY_FIELDS.join(","),
-    forecast_days: 7,
+    forecast_days: 3,
     timezone: "auto",
     temperature_unit: "celsius",
     wind_speed_unit: "kmh",

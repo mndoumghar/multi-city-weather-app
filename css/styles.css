@@ -88,8 +88,15 @@ h2 {
 }
 
 @media (min-width: 900px) {
-  .dashboard { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
-  .message, .current { grid-column: 1 / -1; }
+  .dashboard {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  }
+
+  .message,
+  .current,
+  .forecast {
+    grid-column: 1 / -1;
+  }
 }
 
 /* ---------- Search ---------- */
@@ -230,3 +237,64 @@ h2 {
     scroll-behavior: auto !important;
   }
 }
+
+
+.forecast-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.75rem;
+}
+
+.forecast-card {
+  min-width: 0;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.forecast-date {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.forecast-icon {
+  display: block;
+  margin: 0.75rem 0;
+  font-size: 2.2rem;
+}
+
+.forecast-condition {
+  min-height: 2.5rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.forecast-temperatures {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  font-weight: 600;
+}
+
+.forecast-max {
+  color: var(--text);
+}
+
+.forecast-min {
+  color: var(--muted);
+}
+
+
+.forecast-precipitation {
+  margin: 0.75rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+

@@ -6,6 +6,8 @@ import {
   formatTemperature,
   formatPercentage,
   formatWindSpeed,
+  formatForecastDate,
+
 } from "./format.js";
 
 
@@ -21,7 +23,7 @@ export function renderLayout(root) {
     required: true,
   });
 
-// creat form <form> ...
+  // creat form <form> ...
 
   const searchForm = h("form", { className: "search", role: "search", autocomplete: "off" }, [
 
@@ -64,15 +66,41 @@ export function renderLayout(root) {
     hidden: true,
   });
 
+  //forcast ====>
+  const forecastList = h("div", {
+    className: "forecast-list",
+  });
+
+  const forecastSection = h("section", {
+    className: "card forecast",
+    "aria-label": "7-day weather forecast",
+    hidden: true,
+  }, [
+    h("h2", { text: "7-Day Forecast" }),
+    forecastList,
+  ]);
+  ///////////////
+
+
   const main = h(
     "main",
     { id: "main", className: "dashboard", "aria-busy": "false" },
-    [statusMessage, errorMessage, resultsSection, currentCard]
+    [statusMessage, errorMessage, resultsSection, currentCard, forecastSection]
   )
 
 
   setChildren(root, [header, main]);
-  return { cityInput, searchForm, statusMessage, errorMessage, resultsList, currentCard, main };
+  return {
+  cityInput,
+  searchForm,
+  statusMessage,
+  errorMessage,
+  resultsList,
+  currentCard,
+  forecastList,
+  forecastSection,
+  main,
+};
 
 }
 
@@ -127,4 +155,60 @@ export function renderCurrentWeather(container, place, weatherData) {
   ];
 
   setChildren(container, content);
+}
+
+
+
+export function renderDailyForecast(container, weatherData) {
+  const daily = weatherData.daily;
+
+  const forecast = daily.time.map((date, index) => ({
+    date: formatForecastDate(date),
+    maxTemp: formatTemperature(daily.temperature_2m_max[index]),
+    minTemp: formatTemperature(daily.temperature_2m_min[index]),
+    weatherCode: daily.weather_code[index],
+    precipitation: formatPercentage(
+      daily.precipitation_probability_max[index] ?? 0
+    ),
+  }));
+
+  const cards = forecast.map((day) => {
+    const condition = describeWeatherCode(day.weatherCode, true);
+
+    return h("article", { className: "forecast-card" }, [
+      h("h3", {
+        className: "forecast-date",
+        text: day.date,
+      }),
+
+      h("span", {
+        className: "forecast-icon",
+        "aria-hidden": "true",
+        text: condition.icon,
+      }),
+
+      h("p", {
+        className: "forecast-condition",
+        text: condition.label,
+      }),
+
+      h("div", { className: "forecast-temperatures" }, [
+        h("span", {
+          className: "forecast-max",
+          text: day.maxTemp,
+        }),
+        h("span", {
+          className: "forecast-min",
+          text: day.minTemp,
+        }),
+      ]),
+
+      h("p", {
+        className: "forecast-precipitation",
+        text: `Rain: ${day.precipitation}`,
+      }),
+    ]);
+  });
+
+  setChildren(container, cards);
 }

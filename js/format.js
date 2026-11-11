@@ -20,3 +20,13 @@ export function formatWindSpeed(kmh) {
   return `${kmh} km/h`;
 }
 
+
+export function formatForecastDate(dateString) {
+  
+    const date = new Date(`${dateString}T00:00:00`);
+    return new Intl.DateTimeFormat("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric"
+    }).format(date);
+}
