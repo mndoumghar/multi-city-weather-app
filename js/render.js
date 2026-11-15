@@ -80,12 +80,18 @@ export function renderLayout(root) {
     forecastList,
   ]);
   ///////////////
+  const citiesContainer = h("section", {
+  className: "cities-dashboard",
+  "aria-label": "Selected cities weather",
+  hidden: true,
+});
+
 
 
   const main = h(
     "main",
     { id: "main", className: "dashboard", "aria-busy": "false" },
-    [statusMessage, errorMessage, resultsSection, currentCard, forecastSection]
+    [statusMessage, errorMessage, resultsSection, currentCard, forecastSection, citiesContainer]
   )
 
 
@@ -100,6 +106,7 @@ export function renderLayout(root) {
   currentCard,
   forecastList,
   forecastSection,
+  citiesContainer,
   main,
 };
 
@@ -212,4 +219,42 @@ export function renderDailyForecast(container, weatherData) {
   });
 
   setChildren(container, cards);
+}
+
+
+export function renderCityWeatherCard(place, weatherData) {
+  const cityCard = h("article", {
+    className: "city-card",
+  });
+
+
+  const currentCard = h("section", {
+    className: "card current",
+    "aria-label": `Current weather in ${formatPlaceName(place)}`,
+  });
+
+
+  const forecastList = h("div", {
+    className: "forecast-list",
+  });
+
+  
+  const forecastSection = h("section", {
+    className: "card forecast",
+    "aria-label": `7-day forecast for ${formatPlaceName(place)}`,
+  }, [
+    h("h3", { text: "7-Day Forecast" }),
+    forecastList,
+  ]);
+
+  renderCurrentWeather(currentCard, place, weatherData);
+
+  renderDailyForecast(forecastList, weatherData);
+
+  setChildren(cityCard, [
+    currentCard,
+    forecastSection,
+  ]);
+
+  return cityCard;
 }

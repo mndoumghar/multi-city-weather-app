@@ -1,6 +1,7 @@
 
 
 export function h(tag, props = {}, children = []) {
+
   const element = document.createElement(tag);
 
   for (const [key, value] of Object.entries(props)) {
@@ -17,6 +18,7 @@ export function h(tag, props = {}, children = []) {
       element.setAttribute(key, value === true ? "" : value);
     }
   }
+  
 
   appendChildren(element, children)
   return element

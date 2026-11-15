@@ -1,10 +1,27 @@
 import { show, hide } from "./dom.js";
 import { searchCities, getWeather } from "./api.js";
-import { renderLayout, renderResults, renderCurrentWeather , renderDailyForecast} from "./render.js";
+
+import {
+  renderLayout,
+  renderResults,
+  renderCityWeatherCard,
+} from "./render.js";
+
+
+import {
+    AppError,
+    getErrorMessage,
+    ERROR_CODES,
+  } from "./error-handler.js";
 
 
 const root = document.getElementById("app");
+
 const ui = renderLayout(root);
+
+const selectedCities = new Map();
+const pendingCities = new Set();
+
 
 init();
 
@@ -28,61 +45,86 @@ async function handleSearchSubmit(event) {
     const places = await searchCities(city);
 
     if (places.length === 0) {
-      showError("City not found.");
-      return;
+      throw new AppError(ERROR_CODES.CITY_NOT_FOUND);
+
     }
 
     renderResults(ui.resultsList, places, selectCity);
-  }, "Unable to search. Please try again.");
+    show(ui.resultsSection);
+
+  });
 }
 
 async function selectCity(place) {
-  hide(ui.currentCard);
-  hide(ui.forecastSection);
 
-  await runTask("Loading weather...", async () => {
-    const weather = await getWeather(place.latitude, place.longitude);
+  const cityKey = place.id ?? `${place.latitude},${place.longitude}`;
+  if (selectedCities.has(cityKey)) {
+    showError("This city is already on your dashboard.");
+    return;
+  }
 
-     hide(ui.resultsSection);
+  if (pendingCities.has(cityKey)) {
+    return;
+  }
 
+  pendingCities.add(cityKey);
 
-    renderCurrentWeather(ui.currentCard, place, weather);
+  try {
+    await runTask("Loading weather...", async () => {
+      const weather = await getWeather(
+        place.latitude,
+        place.longitude
+      );
 
-    renderDailyForecast(ui.forecastList, weather);
+      const cityCard = renderCityWeatherCard(place, weather);
 
-    show(ui.currentCard);
-    show(ui.forecastSection);
+      ui.citiesContainer.prepend(cityCard);
 
-  }, "Unable to load weather. Please try again.");
+      selectedCities.set(cityKey, {
+        place,
+        weather,
+      });
+
+      show(ui.citiesContainer);
+      hide(ui.resultsSection);
+
+    });
+
+  } finally {
+    pendingCities.delete(cityKey);
+  }
 }
 
 
 
-async function runTask(loadingText, task, errorText) {
+async function runTask(loadingText, task) {
   hide(ui.errorMessage);
+
   ui.statusMessage.textContent = loadingText;
   show(ui.statusMessage);
+
   ui.main.setAttribute("aria-busy", "true");
 
   try {
     await task();
   } catch (error) {
     console.error(error);
-    showError(errorText);
+    showError(getErrorMessage(error));
   } finally {
     hide(ui.statusMessage);
     ui.main.setAttribute("aria-busy", "false");
   }
 }
 
+
 function showError(text) {
   ui.errorMessage.textContent = text;
   show(ui.errorMessage);
 }
 
+
 function resetMessages() {
   hide(ui.errorMessage);
-  hide(ui.currentCard);
-  hide(ui.forecastSection);
+  hide(ui.resultsSection);
   ui.resultsList.replaceChildren();
 }

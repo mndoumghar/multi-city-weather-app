@@ -63,22 +63,20 @@ so that I can plan my activities.
 ### US-04: Handle API errors and loading states
 
 ## User Story
-
 As a user,
 I want to receive understandable messages when something goes wrong,
 so that I know what happened and can retry.
 
 ## Acceptance Criteria
 
-- [ ] Display a loading indicator.
-- [ ] Handle unknown cities.
-- [ ] Handle network errors.
-- [ ] Handle HTTP errors.
-- [ ] Handle API quota limitations.
-- [ ] Display readable error messages.
-- [ ] Hide loading indicators after success or failure.
-- [ ] Allow the user to retry.
-
+- [X] Display a loading indicator.
+- [X] Handle unknown cities.
+- [X] Handle network errors.
+- [X] Handle HTTP errors.
+- [X] Handle API quota limitations.
+- [X] Display readable error messages.
+- [X] Hide loading indicators after success or failure.
+- [X] Allow the user to retry.
 
 
 
@@ -92,14 +90,14 @@ so that another developer can understand and run the project.
 
 ## Acceptance Criteria
 
-- [ ] Explain the selected weather API.
-- [ ] Document the endpoints used.
-- [ ] Explain the request parameters.
-- [ ] Document API usage limits.
-- [ ] Include an example JSON response.
-- [ ] Explain how data is transformed and displayed.
-- [ ] Explain how to run the application.
-- [ ] Include screenshots.
+- [X] Explain the selected weather API.
+- [X] Document the endpoints used.
+- [X] Explain the request parameters.
+- [X] Document API usage limits.
+- [X] Include an example JSON response.
+- [X] Explain how data is transformed and displayed.
+- [X] Explain how to run the application.
+- [X] Include screenshots.
 
 
 
@@ -114,12 +112,12 @@ so that the client and evaluator can understand and test my work.
 
 ## Acceptance Criteria
 
-- [ ] GitHub repository contains the source code.
-- [ ] Regular and meaningful commits.
-- [ ] GitHub Project board is updated.
-- [ ] README is complete.
-- [ ] Manual testing log is included.
-- [ ] Screenshots are included.
-- [ ] Application is deployed using GitHub Pages if possible.
-- [ ] Prepare a 5-minute demonstration.
-- [ ] Prepare the technical explanation and Q&A.
+- [X] GitHub repository contains the source code.
+- [X] Regular and meaningful commits.
+- [X] GitHub Project board is updated.
+- [X] README is complete.
+- [X] Manual testing log is included.
+- [X] Screenshots are included.
+- [X] Application is deployed using GitHub Pages if possible.
+- [X] Prepare a 5-minute demonstration.
+- [X] Prepare the technical explanation and Q&A.

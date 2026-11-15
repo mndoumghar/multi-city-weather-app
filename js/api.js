@@ -1,5 +1,38 @@
 const GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search";
 const FORECAST_URL = "https://api.open-meteo.com/v1/forecast";
+import {
+  AppError,
+  ERROR_CODES,
+  createHttpError,
+} from "./error-handler.js";
+
+
+const FORECAST_DAYS = 7;
+
+async function reqJson(url) {
+  let response;
+  try {
+    response  = await fetch(url);
+  } catch(error) {
+    throw  new AppError(ERROR_CODES.NETWORK, {
+      cause: error,
+    });
+  }
+
+  if(!response.ok) {
+    throw createHttpError(response.status);
+  }
+
+  
+  try {
+    return await response.json();
+  } catch(error) {
+    throw  new AppError(ERROR_CODES.INVALID_RESPONSE, {
+      cause: error,
+    })
+  }
+}
+
 
 const CURRENT_FIELDS = [
   "temperature_2m",
@@ -22,7 +55,6 @@ const DAILY_FIELDS = [
 
 
 
-
 export async function searchCities(name) {
   const params = new URLSearchParams({
     name,
@@ -31,12 +63,10 @@ export async function searchCities(name) {
     format: "json",
   });
 
-  const response = await fetch(`${GEOCODING_URL}?${params}`);
-  if (!response.ok) {
-    throw new Error(`Geocoding request failed: ${response.status}`);
-  }
+  const data = await reqJson(
+    `${GEOCODING_URL}?${params}`
+  );
 
-  const data = await response.json();
   return data.results ?? [];
 }
 
@@ -46,17 +76,13 @@ export async function getWeather(latitude, longitude) {
     latitude,
     longitude,
     current: CURRENT_FIELDS.join(","),
-    daily:  DAILY_FIELDS.join(","),
-    forecast_days: 7,
+    daily: DAILY_FIELDS.join(","),
+    forecast_days: FORECAST_DAYS,
     timezone: "auto",
     temperature_unit: "celsius",
     wind_speed_unit: "kmh",
   });
 
-  const response = await fetch(`${FORECAST_URL}?${params}`);
-  if (!response.ok) {
-    throw new Error(`Forecast request failed: ${response.status}`);
-  }
-
-  return response.json();
+  return reqJson(`${FORECAST_URL}?${params}`);
 }
+

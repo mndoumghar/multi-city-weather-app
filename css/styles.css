@@ -298,3 +298,42 @@ h2 {
   color: var(--muted);
 }
 
+
+.cities-dashboard {
+  grid-column: 1/3 span ;
+  display: grid;
+  gap: var(--space);
+  min-width: 0;
+}
+
+.city-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space);
+  min-width: 0;
+  padding: var(--space);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+
+.city-card .forecast h3 {
+  margin: 0 0 var(--space);
+  font-size: 1rem;
+  color: var(--text);
+}
+
+
+@media (min-width: 900px) {
+  .city-card {
+    grid-template-columns: minmax(15rem, 0.8fr) minmax(0, 1.6fr);
+    align-items: start;
+  }
+
+  .city-card > .current,
+  .city-card > .forecast {
+    grid-column: auto;
+  }
+}
